@@ -1,0 +1,36 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<iterator>
+int main() {
+	std::vector<std::string>x, y, z, ans;
+	std::string s;
+	int a, b, c;
+	while (std::cin >> a >> b >> c) {
+		for (int i = 0; i < a; ++i)
+		{
+			std::cin >> s;
+			x.push_back(s);
+		}
+		for (int j = 0; j < b; ++j) {
+			std::cin >> s;
+			y.push_back(s);
+		}
+		for (int k = 0; k < c; ++k) {
+			std::cin >> s;
+			z.push_back(s);
+		}
+		for (int i = 0; i < b; ++i) {
+			if (find(x.begin(), x.end(), y[i]) != x.end())
+				if (find(z.begin(), z.end(), y[i]) == z.end())
+					ans.push_back(y[i]);
+		}
+		if (ans.empty()) {
+			std::cout << "no enemy spy";
+		}
+		else {
+			copy(ans.begin(), ans.end(), std::ostream_iterator<std::string>(std::cout, " "));
+		}
+	}
+	return 0;
+}
