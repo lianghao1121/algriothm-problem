@@ -1,0 +1,34 @@
+#include<list>
+#include<algorithm>
+#include<vector>
+#include<iterator>
+#include<iostream>
+int main() {
+	int t,num;
+	std::list<int>coll;
+	std::list<int>::iterator pos;
+	std::cin >> t;
+	while (t--) { /* 测试用例次数 */
+		std::cin >> num;
+		coll.clear();
+		int k = 2;
+		for (int i = 1; i <= num; ++i) {
+			coll.push_back(i); /*队伍编号*/
+		}
+		while (coll.size() > 3) {
+			int cn = 1;
+			for (pos = coll.begin(); pos != coll.end();) {			
+				if (cn++%k == 0) {				
+/* 设置cn的原因：删除操作是由迭代器以及list提供的成员函数操作的，计算哪个该删除是另一个操作方式，与容器操作不通，因此需要设置一个变量来计算哪个位置应该删除*/
+					pos = coll.erase(pos);
+				}
+				else {
+					++pos;
+				}
+			}
+			k = (k == 2 ? 3 : 2);
+		}
+		copy(coll.begin(), coll.end(),std::ostream_iterator<int>(std::cout, " "));
+	}
+	return 0;
+}
