@@ -1,0 +1,185 @@
+#include<algorithm>
+#include<iostream>
+/*  size get indexof  erase  insert output  */
+/*********************				老版抽象线性表实现				**************************/
+template<class T>
+class linearList{
+public:
+	virtual ~linearList() {};
+	virtual bool empty()const = 0;
+	virtual int size()const = 0;
+	virtual get(int TheIndex) const = 0;
+	virtual indexof(T const& elem)const = 0;
+	virtual erase(T const& elem)const = 0;
+	virtual insert(const int num,T cosnt &elem)const = 0;
+	virtual output(std::ostream& out)const = 0;
+};
+/*************************************     线性表的扩充版本，继承了老版线性表       **********************************/
+template<class T>
+class extendedLinearList :public linearList<T> {
+public:
+	virtual ~extendedLinearList() {};
+	virtual void clear() = 0;
+	virtual void push_back(const T& elem) = 0;
+};
+template<class T>
+void extendedLinearList<T>::clear(){
+	while (firstNode != NULL) {
+		chainNode<T>* nextNode = firstNode->next;
+		delete firstNode;
+		firstNode = nextNode;
+	}
+	listSize--;
+}
+template<class T>
+void extendedLinearList<T>::push_back(const T& elem) {
+	chainNode<T>* newNode = new chainNode<T>(elem, NULL);
+	if (firstNode == NULL) {
+		firstNode=lastNode=newNode
+	}
+	else {
+		lastNode->next = newNode;
+		lastNode = newNode;
+	}
+	listSize++;
+}
+
+/***********************************************		链表的实现		*****************************************/
+template<class T>
+class chainNode {
+	T element;
+	chainNode<T>* next;
+	chainNode(const T& element) {
+		this->element = element;
+}
+	chainNode(const T& element, chainNode<T>* next) {
+		this->element = element;
+		this->element = next;
+	}
+};
+template<class T>
+class Chain:public linearList<T> {
+public:
+	Chain(int initialcapacity = 10);
+	Chain(const Chain<T>&);
+	~Chain();
+	bool empty()const { return listSize == 0; };
+	int size() { return listSize; };
+	T& get(int TheIndex)const = 0;
+	int indexof(T const& elem)const = 0;
+	void erase(T const& elem)const = 0;
+	void insert(const int num, const T &elem)const = 0;
+	void output(std::ostream& out)const = 0;
+protected:
+	CheckIndex(int theIndex)const;
+	chainNode<T>* firstNode;
+	int listSize;
+};
+template< class T>
+Chain<T>::Chain(int initialcapacity) {
+/*构造函数*/
+	if (initialcapacity < 1) {
+		ostream s;
+		s<< "error";
+		throw illegalParameterValue(s.str());
+	}
+	firstNode = NULL;
+	listSize = 0;
+}
+template<class T>
+Chain<T>::Chain(const Chain<T>& theList) {
+	listSize = theList.listSize;
+	if (listSize == 0) {
+		firstNode = NULL;
+		return;
+	}
+	ChainNode<T>* source = theList.firstNode;
+	firstNode = new chainNode<T>(source->element);
+	source = source->next;
+	chainNode<T>* targetNode = firstNode;
+	while (sourceNode != NULL) {
+		targerNode->next = new chainNode<T>(source->element);
+		source = source->next;
+		targetNode = targetNode->next;
+	}
+	targetNode->next = NULL;
+}
+template<class T>
+Chain<T>::~Chain() {
+	while (firstNode != NULL) {
+		delete firstNode;
+		firstNode = firstNode->next;
+	}
+}
+template<class T>
+T& Chain<T>::get(int TheIndex)const {
+	chainNode<T>* currentNode = firstNode;
+	for (int i = 0; i < theIndex; ++i) {
+		currentNode = currentNode->next;
+	}
+	return currentNode->element;
+}
+template<class T>
+int Chain<T>::indexof(T const& elem)const {
+	chainNode<T>* currenNode = firstNode;
+	int index = 0;
+	while (currentNode != NULL && currentNode != elem) {
+		currenNode = currentNode->next;
+		++index;
+	}
+	if (currentNode == NULL) {
+		return -1;
+	}
+	else {
+		return index;
+	}
+}
+template<class T>
+void Chain<T>::erase(T const& elem)const{
+	checkIndex(elem);
+	chainNode<T>* deleteNode;
+	if (elem == 0) {
+		deleteNode = firstNode;
+	}
+	else {
+		chainNode<T>* currentNode = firstNode;
+		for (int i = 0; i < elem-1; ++i) {
+			currentNode = currentNode->next;
+		}
+		chainNode<T>* deleteNode = currentNode->next;
+		currentNode->next = currentNode->next->next;
+	}
+	listSize--;
+	delete deleteNode;
+}
+template<class T>
+void Chain<T>::insert(const int num,const T& elem)const {
+	if (num<0 || num>listSize) {
+		ostream s;
+		s << "error index"
+			throw illegalIndex(s.str());
+	}
+	if (num == 0) {
+		firstNode = new chainNode(num, firstNode); /*会把其firstnode安排到所需要创建的节点的下一个*/
+	}
+	else {
+		chainNode<T>* currentNode=firstNode;
+		for (int i = 0; i < num-1; ++i) {
+			currentNode = currentNode->next;
+		}
+		currentNode->next = new chainNode<T>(elem, current->next);
+	}
+}
+template<class T>
+void Chain<T>::output(std::ostream& out)const {
+	for (chainNode<T>* currentNode = firstNode; currentNode != NULL; currentNode = currentNode->next) {
+		out << currentNode->element << " ";
+	}
+}
+template<class T>
+std::ostream& operator<<(std::ostream& out, const Chain<T>& x) {
+	{x.output(out); return out; }
+}
+int main() {
+	return 0;
+}
