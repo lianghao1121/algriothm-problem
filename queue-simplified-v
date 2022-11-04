@@ -1,0 +1,42 @@
+#include<iostream>
+#define MAXSIZE 100;
+template<class T>
+class queueNode {
+	T base[MAXSIZE];
+	int front, rear;
+};
+template<class T>
+bool initialQueue(queueNode<T>q) {
+	q.base = new int[MAXSIZE];
+	if (!q.base)return false;
+	q.front = 0;
+	q.rear = 0;
+	return true;
+}
+template<class T>
+bool enQueue(queueNode<T>& q, T e) {
+	if ((q.rear + 1) % MAXSIZE == q.front) {
+		return false;
+	}
+	q.base[q.rear] = e;
+	q.rear = (q.rear + 1) % MAXSIZE;
+	return true;
+}
+template<class T>
+bool deQueue(queueNode<T>& q, T e) {
+	if (q.front == q.rear) {
+		return false;
+	}
+	e = q.base[q.front];
+	q.front = (q.front + 1) % MAXSIZE;
+	return true;
+}
+template<class T>
+T& getHead(stackNode<T>& s) {
+	if (s.front != s.rear) {
+		return s.base[s.front];
+	}
+	else {
+		return -1;
+	};
+}
