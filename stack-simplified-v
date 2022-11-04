@@ -1,0 +1,36 @@
+template<class T>
+class stackNode {
+	T element;
+	stackNode<T>* next;
+	stackNode(const T& element) {
+		this->element = element;
+	}
+};
+template<class T>
+bool pushStack(stackNode<T>*s, T e)
+{
+	stackNode<T>* p = new stackNode<T>(e);
+	p->next = s;
+	s = p;
+	return true;
+}
+template< class T >
+bool popStack(stackNode<T>* s, T e) {
+	if (s == NULL) {
+		return false;
+	}
+	stackNode<T>* deleteNode = s;
+	e = s->element;
+	s = s->next;
+	delete s;
+	return true;
+}
+template<class T>
+T topStack(stackNode<T>* s) {
+	if (s == NULL) {
+		return -1;
+	}
+	else {
+		return s->element;
+	}
+}
