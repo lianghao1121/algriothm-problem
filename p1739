@@ -1,0 +1,25 @@
+#include<iostream>
+#include<stack>
+#include<string>
+#include<algorithm>
+int main() {
+	std::string c ;
+	std::stack<std::string>s;
+	while (std::cin >> c && c != "@") {
+		if (c == "(")
+			s.push(c);
+		if(c==")")
+			if (!s.empty()) {
+				s.pop();
+			}
+			else {
+				std::cout << "NO" << std::endl;
+				return 0;
+			}
+	}
+	if (s.empty())
+		std::cout << "YES" << std::endl;
+	else
+		std::cout << "No" << std::endl;
+	return 0;
+}
