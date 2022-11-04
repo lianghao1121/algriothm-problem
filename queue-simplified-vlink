@@ -1,0 +1,49 @@
+#include<iostream>
+template<class t>
+class queueNod {
+	T element;
+	queueNode<T>* next;
+	queueNod(const T& element) {
+		this->element = element;
+	}
+};
+template<class T>
+class queueNode {
+	queuenNod<T>* front;
+	queueNod<T>* rear;
+};
+template<class T>
+bool initQueue(queueNode<T>* q, T e) {
+	q.front = q.rear = new queueNod<T>;
+	q.front->next = NULL;
+	
+}
+template<class T>
+void enQueue(queueNode<T>& q, T e) {
+	queueNod<T>* s = new queueNode<T>(e);
+	s->next = NULL;
+	q.rear->next = s;
+	q.rear = s;
+}
+template<class T>
+void deQueue(queueNode<T>& q, T e) {
+	if (q.rear == q.front) {
+		return false;
+	}
+	queueNod<T>* deleteNode = q.front->next;
+	e = deleteNode->element;
+	q.front->next = deleteNode->next;
+	if (q.rear == deleteNode) {
+		q, rear = q.front;
+	}
+	delete deleteNode;
+	return true;
+}
+template<class T>
+T& top(queueNode<T>& q) {
+	if (q.front != q.rear) {
+		return q.front->next->element;
+	}
+	else
+		return -1;
+}
