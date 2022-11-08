@@ -1,0 +1,46 @@
+/*UVA12100*/
+#include<stack>
+#include<queue>
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<iterator>
+#include<functional>
+int main() {
+	int T, n, m;
+	std::cin >> T;
+	for (int i = 0; i < T; ++i) {
+		std::queue<int>q;
+		std::vector<int>a, b;
+		int k = 0, x;
+		std::cin >> n >> m;
+		for (int j = 0; j < m; ++j) {
+			std::cin >> x;
+			a.push_back(x);
+			b.push_back(x);
+			q.push(j);
+		}
+		sort(b.begin(), b.end(), std::greater<int>());
+		int w = 0;
+		int max = 0;
+		while (!q.empty()) {
+			max = b[w];
+			int t = q.front();
+			if (a[t] < max) { 
+				q.pop();
+				q.push(t);
+			}
+			else {
+				if (t == m) {		/*当t是你所期望的，那么就输出你所累积的k*/
+					std::cout << ++k << std::endl;
+				}
+				else {		/*当a的值是最大，且不是你所期望的值，那么就输出，即k++，w为下一个最大的value，在轮回进行*/
+					q.pop();
+					k++;
+					w++;
+				}
+			}
+		}
+	}
+	return 0;
+}
