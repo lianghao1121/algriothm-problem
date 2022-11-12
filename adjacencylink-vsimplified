@@ -1,0 +1,52 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#define MaxVnum 100
+typedef char VexType;
+typedef  int EdgeType;
+/*邻接表的构造分为三部分，第一部为为建立一个数组，存储图的节点元素的内容（VexNod），第二部分为建立节点所指向的邻接点的构造，其中其内容是邻接点的序号以及
+指向下一个邻接点的指针，节点的指针为first，寓意代表指向第一个节点的指针，第三部分为灵界表的整体概括，内容为一个节点类型的数组，以及这个邻接表的一些
+属性，比如vexnum，有多少个节点，以及edgenum，这个图有多少个边*/
+class adjNode { 
+public:
+	int v;
+	adjNode* next;
+};
+class VexNod {
+public:
+	VexType data;
+	adjNode* first;
+};
+class ALGraph {
+public:
+	VexNod Vex[MaxVnum];	//节点表
+	int vexnum, edgenum; //节点数 边数
+};
+void insertedge(ALGraph& G, int i, int j) {
+	adjNode* s;
+	s = new adjNode;
+	s->v = j;
+	G.Vex[i].first = s;
+}
+void createALGraph(ALGraph& a) {
+	VexType u, v;
+	std::cout << "please input the count of vexnum and edgenum ! ";
+		std::cin >> a.vexnum >> a.edgenum;
+		for (int i = 0; i < a.vexnum; ++i) {
+			std::cin >> a.Vex[i].data; //输入节点信息，将节点的数据写入节点
+	}
+		for (int j = 0; j < a.vexnum; ++j) {
+			a.Vex[j].first = NULL;
+		}
+		std::cout << "please input each of the edge of nod ";
+		while (a.edgenum--) {
+			int i = locatevex(G, u);
+			int j = locatevex(G, v);
+			if (i != -1 && j != -1) {
+				insertedge(G, i, j);
+			}
+		}
+}
+int main() {
+	return 0;
+}
