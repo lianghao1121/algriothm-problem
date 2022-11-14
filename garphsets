@@ -1,0 +1,43 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#define  MaxVnum 100; /*最大节点数*/
+typedef char Vextype; /*节点的数据类型*/
+typedef int EdgeType; /*边上权值的数据类型，若为不带权值的图，则为0或1*/
+/*邻接矩阵的实现*/
+#define N 100;
+class AMGraph {
+public:
+	Vextype Vex[100]; /*一维数组存储节点信息*/
+	EdgeType Edge[100][100];	/*邻接矩阵存储边信息*/
+	int vexnum, edgenum; /*节点数（vexnum），边数（edgenum）*/
+};
+/*边集数组实现*/
+struct Edge {
+	int u;
+	int v;
+	int w;
+}e[100];
+/*邻接表的定义*/
+typedef struct ajdNode {
+	int v;
+	adjNode* next;
+}adjNode;	//邻接点的定义 指向下一节点的next 以及邻接点的下表，比如a与b相邻，b为a的邻接点，b的序号是3，则v==3；
+typedef struct VexNode{
+	Vextype data;	//此节点的内容
+	adjNode* first; //节点所指向的第一个与其邻接的邻接点
+}VexNode; //节点的定义
+typedef struct {
+	VexNode vex[100];	//节点数为100的节点表
+	int vexnum, edgenum; /*节点数 边数*/
+
+};
+/*链式前向星采用了一种静态链表的存储方式，将边集数组和邻接表相结合。可以快速访问一个节点的所有邻接点*/
+struct node {
+	int to, next, w;
+}edge[100]; /*边集数组，其中的下表定义为边的序号，w为权，to 为起始起点指向的终节点的序号，next则类似于指针，指向的是下一个邻接边*/
+int head[1000];/*容纳节点的数组*/
+
+int main() {
+	return 0;
+}
