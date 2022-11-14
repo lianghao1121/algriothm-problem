@@ -1,0 +1,31 @@
+/*UAV572*/
+#include<iostream>
+#include<vector>
+#include<string>
+#define REP(i,b,e) for(int i=(b);i<=(e);++i)
+const int maxn = 100 + 5;
+std::string str[maxn];		//储存字符的矩阵
+int m, n, setid[maxn][maxn];	//额定的行列 ，连同分量号
+void dfs(int x, int y,int id) {  //dfs所传递的参数是 行列和连通分量
+	if (x < 0 || x >= m || y < 0 || y >= n) return; //出界
+	REP(dx,- 1, 1) // x轴上的遍历
+		REP(dy, -1, 1)	//y轴上的遍历
+		 if (dx != 0 || dy != 0)	
+			dfs(x + dx, y + dy, id);
+}
+int main() {
+	while ((std::cin >> m >> n) && m && n) {
+		REP(i, 0, m - 1)
+			std::cin >> str[i];
+		memset(setid, 0, sizeof(setid));
+		int cnt = 0;
+		REP(i, 0, m - 1)
+			REP(j, 0, n - 1)
+			if (setid[i][j] == 0 && str[i][j] == '@')
+				dfs(i, j, ++cnt);
+		std::cout << cnt << std::endl;
+			
+	}
+	return 0;
+
+}
