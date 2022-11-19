@@ -1,0 +1,28 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<iterator>
+#define max 100
+int main() {
+	int tmpnum,Wem,Wfu,numC,cV,cW; //Wem为空罐子重量，Wfu为装满罐子重量
+	std::cin >> tmpnum;
+	std::vector<int>bag(100, 0);
+	std::vector<int>v,w; //单个硬币的面值和重量
+	while (tmpnum--) {
+	std::cin >> Wem >> Wfu;	//存钱罐的空钱罐重量和满重量
+	std::cin >> numC;	//所容纳的
+	int W = Wfu - Wem;
+	for (int i = 0; i < numC; ++i) {
+		std::cin >> cV >> cW;
+		v.push_back(cV);
+		w.push_back(cW);
+	}
+	bag[0] = 0;
+	for (int i = 0; i < numC; ++i) {
+		for (int j = w[i]; j <= W; ++j) {
+			bag[j] = std::min(bag[j], bag[j - w[i]] + v[i]]);
+		}
+	}
+	}
+	
+	
