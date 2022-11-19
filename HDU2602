@@ -1,0 +1,38 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<iterator>
+#define max 100
+int main() {
+	int tmpnum, N, V, tem;// 第一行输入表示骨头的数量与体积，第二行输入 表示每个骨头的价值，第三行表示每个骨头的体积
+	std::cin >> tmpnum;
+	std::vector<std::vector<int>>vec(max, std::vector<int>(max));//用于装在dp的数组
+	std::vector<int>v(max), w(max);
+	while (!tmpnum) {
+		std::cin >> N >> V;
+		for (int i = 0; i < N; ++i)
+			std::cin >> tem;
+		v.push_back(tem);
+	}
+	for (int i = 0; i < N; ++i) {
+		std::cin >> tem;
+		w.push_back(tem);
+	}
+	for (int i = 0; i < N; ++i) {
+		vec[i][0] = 0;		//初始化dp数组 让0，0的行列均initialize zero
+	}
+	for (int j = 0; j < V; ++V) {
+		vec[0][j] = 0;		//初始化dp数组 让0，0的列均initialize zero
+	}
+	for (int i = 1; i <= N; ++i)
+		for (int j = 1; j <= V; ++j)
+			if (w[i] > j) {
+				vec[i][j] = vec[i - 1][j];
+			}
+			else {
+				vec[i][j] = std::max(vec[i - 1][j], vec[i - 1][j - w[i] + w[i]);
+			};
+}
+}
+return 0;
+}
