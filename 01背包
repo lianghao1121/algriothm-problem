@@ -1,0 +1,43 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<algorithm>
+#include<iterator>
+#include<cctype>
+/*01背包问题*/
+void opt2(int n, int w) {
+	for (int i = 1; i <= n; ++i)
+		for (int j = w; i >= w[i]; j--)
+			dp[j] = max(dp[j], dp[j - w[i]] + vi[i]);
+}
+int main() {
+	int x[10];
+	int c[100][100];
+	int W = 10;
+	int v[10];
+	int w[10];
+	int n = 10;
+	for (int i = 1; i <= n; i++)
+		for (int j = 1; j <= W; j++)
+			if (j < w[i])
+				c[i][j] = c[i - 1][j];
+			else
+				c[i][j] = std::max(c[i - 1][j], c[i - 1][j - w[i]] + v[i]);
+/*最优解构造*/
+	int j = W;
+	for (int i = n; i > 0; --i) {
+		if (c[i][j] > c[i - 1][j]) {
+			x[i] = 1;
+			j -= w[i];
+		}
+		else
+			x[i] = 0;
+		std::cout << "放入背包的物品为";
+		for (int i = 1; i < n; ++i) {
+				if (x[i] == 1)
+					std::cout << i << " ";
+			}
+
+	}
+
+}
