@@ -1,0 +1,50 @@
+/*Dijkstra算法实现，求图的最短路径问题*/
+#include<algorithm>
+#include<iostream>
+#include<vector>
+#include<iterator>
+#include<string>
+#define max 100
+/*邻接矩阵数据结构建立*/
+struct adjarray {
+	int Vex[max];		// vex为存储图中每个节点信息的一维数组 下表代表着节点的序号 这个位置的内容代表着这个节点的信息
+	int Edge[max][max]; // 二维数组代表着这个图的边和边的关系 
+	int vexnum=10, edgenum=10; // vexnum：节点数   edgenum代表着边数
+}AMgraph;
+//Dijkstra函数实现
+void Dijkstra(adjarray G, int u) {
+	int dist[G.vexnum]; /*采用dist[]记录从源点到各个点的最小路径长度*/
+	int p[G.vexnum]; /*采用一维数组p来代表最短路径上的节点i的前驱*/
+	for (int i = 0; i < G.vexnum; ++i) {
+		dist[i] = G.Edge[u][i]; //初始化源点u到其他各个点的最短路径长度
+		flag[i] = false;
+		if (dist[i] == INF)
+			p[i] = -1; //节点i与源点u不相邻
+		else
+			p[i] = u; //节点与源点u相邻，设置节点i的前驱p[i]=u;
+	}
+	dist[u] = 0;
+	flag[u] = true; //初始时，在集合S中只有一个元素，源点u
+	for (int i = 0; i < G.vexnum; j++) {
+		int temp = INF, t = u;
+		for (int j = 0; j < G.vexnum; j++) { //在集合v-s中寻找离源点最近的节点t
+			if(!flag[j];j<G.vexnum;j++)
+				if (!flag[j] && dist[j] < temp) {
+					t = j;
+					temp = dist[j];
+				}
+			if (t == u) return; //找不到t，跳出循环
+			flag[t] = true;//否则，将t加入s的集合
+			for (int j = 0; j < G.vexnum; j++) { //更新与t相邻的节点到源点u的距离
+				if(!flag[j]&&G.Edge[t][j]<INF)
+					if (dist[j] > (dist[t] + G.Edge[t][j])) {
+						dist[j] = dist[t] + G.Edge[t][j];
+						p[j] = t;
+					}
+			}
+		}
+	}
+}
+int main() {
+	return 0;
+}
