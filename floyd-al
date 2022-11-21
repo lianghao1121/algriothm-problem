@@ -1,0 +1,30 @@
+/*floyd算法*/
+#include<iostream>
+#include<climits>
+#define	INF INT_MAX
+#define max 100
+struct adjarray {
+	int Edge[max][max];
+	int Vex[max];
+	int vexnum, edgenum;
+}AMGraph;
+void floyd(adjarray G) {
+	int i, j, k;
+	int dist[max][max];
+	int p[max][max];
+	for (i = 0; i < G.vexnum; i++) {
+		for (j = 0; j < G.vexnum; i++) {
+			dist[i][j] = G.Edge[i][j];
+			if (dist[i][j] < INF && i != j)//如果在节点i和节点j之间有弧，则将节点j的前驱设为i
+				p[i][j] = i; 
+			else
+				p[i][j] = -1; //如果在节点i和节点j之间无弧，则将节点j的前驱设为-1；
+		}
+	}
+	for(k=0;k<G.vexnum;i++)
+		for(i=0;i<G.vexnum;j++)
+			if (dist[i][k] + dist[k][j] < dist[i][j]) {			/*从节点i经节点k到节点j的一条路径更短*/
+				dist[i][j] = dist[i][j] + dist[k][j]; //更新dist[i][j]
+				p[i][j] = p[k][j]; //更新j的前驱为k
+			}
+}
