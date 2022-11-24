@@ -1,0 +1,31 @@
+/*iterator的线性实现*/
+/*我们要求所所设计的iterator可以以线性顺序遍历某个数据结构，以访问数据结构中的元素*/
+/*一般来说，iterator的一些属性（比如iterator所指向的元素类型）无法直观的表达出来，鉴于不能使用嵌套类型去在iterator内部去声明类型（若一些iterator非class类型，是个int*，或者是long*等等
+我们无法使用嵌套类型去声明其iterator的一些属性，则 我们可以借助一个辅助函数去定义一些属性，其中用的是模板来定位其iterator的类型*/
+template<typename Iterator>
+class Iterator_traits {
+	typedef typename Iterator::value_type value_type;
+};/*看着似乎没什么用，因为其前提还是该iterator有相关类型的嵌套，但是这也是一种新型的定义方式，我们可以根据不同的类型去基于一些特殊的iterator特例化*/
+	/*个别类型偏特化的实现*/
+template<typename T>
+class Iterator_traits<T*> {	/*此偏特化可以解决一些iterator非class类型的嵌套式声明属性*/
+	typedef T value_type;  
+};
+template<typename T>
+class Iterator_traits<const T*> {  /*解决一些const的版本*/
+	typedef T value_type;
+};
+/*当两个iterator相减的时候，所得到的应该是什么？stl中定义为different_type（差距类别）：ptrdiff_t  */
+/*std::count中的代码简略实现，运用了different_type作为返回类型*/
+template<class InputIterator,class T>
+typename Iterator_traits<InputIterator>::difference_type /*该count函数的返回类型*/
+count(InputIterator first, InputIterator last) {
+	typename Iterator_traits<InputIterator>::difference_type n = 0;
+	for (; first != last; first++) {
+		++n;
+	}
+	return n;  /*n的类型为Iterator_traits<InputIterator>::difference_type n，对应了上述的返回类型*/
+}
+/*在stl历史上，当初导入iterator_traits的主要动机之一，就是为了提供一个机制，使得以声明count的返回类型*/
+/*在算法的返回类型中，返回的可能是某个对象，而不是什么具体的类型，更不是value_type，这种情况，需要定义出来新的类型去概括，因此reference_type以及pointer_type孕育而生*/
+/*reference_type和pointer与value_type以及difference_type定义类似，均定义在Iterator_traits中嵌套*/
